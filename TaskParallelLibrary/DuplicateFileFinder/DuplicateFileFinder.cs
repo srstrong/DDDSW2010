@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DuplicateFileFinder
@@ -19,6 +20,8 @@ namespace DuplicateFileFinder
 
         static void ProcessDirectory(string path)
         {
+            ProcessFiles(path);
+
             try
             {
                 var directories = Directory.GetDirectories(path);
@@ -30,8 +33,6 @@ namespace DuplicateFileFinder
 
             }
             catch (UnauthorizedAccessException) { }
-
-            ProcessFiles(path);
         }
 
         static void ProcessFiles(string path)
@@ -43,6 +44,7 @@ namespace DuplicateFileFinder
                                             byte[] data;
                                             try
                                             {
+                                                //Console.WriteLine("Reading file {0} on thread {1}", fileName, Thread.CurrentThread.ManagedThreadId);
                                                 data = File.ReadAllBytes(fileName);
                                             }
                                             catch (IOException)

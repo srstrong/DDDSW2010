@@ -16,7 +16,7 @@ namespace CooperativeCancellation
             {
                 try
                 {
-                    Parallel.For(0, 1000, options, (i) => DoWork(i, options.CancellationToken));
+                    Parallel.For(0, 1000, options, i => DoWork(i, options.CancellationToken));
                 }
                 catch (OperationCanceledException)
                 {
@@ -29,8 +29,7 @@ namespace CooperativeCancellation
             Console.WriteLine("Cancelling work...");
             tokenSource.Cancel();
 
-            Console.WriteLine("Press enter key to continue");
-            Console.ReadLine();
+            Thread.Sleep(1000);
         }
 
         private static void DoWork(int iteration, CancellationToken cancellationToken)

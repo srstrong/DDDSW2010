@@ -31,7 +31,7 @@ namespace BasicTaskFunctionality
 
             //ExceptionsProperty();
 
-            //NonHandledExceptions();
+            NonHandledExceptions();
 
             //NonHandledExceptionsWithHandler();
         }
@@ -75,7 +75,7 @@ namespace BasicTaskFunctionality
             Console.WriteLine("\n{0}()\n", MethodBase.GetCurrentMethod().Name);
 
             var t1 = Task<int>.Factory.StartNew(() => new Random().Next());
-
+            
             Console.WriteLine("Result was {0}", t1.Result);
         }
 
@@ -96,11 +96,20 @@ namespace BasicTaskFunctionality
 
             Console.WriteLine();
 
-            // Better - passes loop variable into StartNew
+            // Or capture loop into temporate
+            for (var i = 0; i < 5; i++)
+            {
+                var x = i;
+                tasks[i] = Task.Factory.StartNew(() => Console.WriteLine(x));
+            }
+
+            // Or even better - pass loop variable into StartNew
             for (var i = 0; i < 5; i++)
             {
                 tasks[i] = Task.Factory.StartNew(data => Console.WriteLine(data), i);
             }
+
+            Task.WaitAll(tasks);
 
             Task.WaitAll(tasks);
         }
@@ -144,8 +153,9 @@ namespace BasicTaskFunctionality
             {
                 t1.Wait();
             }
-            catch (AggregateException)
+            catch (AggregateException e)
             {
+                Console.WriteLine("Exeption! {0}", e);
             }
 
             t1.DisplayState();

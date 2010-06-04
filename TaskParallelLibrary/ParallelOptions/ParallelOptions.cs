@@ -39,7 +39,7 @@ namespace Parallel_Options
         {
             const int iterations = 10000;
 
-            var options = new ParallelOptions() { MaxDegreeOfParallelism = 10 };
+            var options = new ParallelOptions();// { MaxDegreeOfParallelism = -1 };
             var threadsUsed = new ConcurrentDictionary<int, int>();
 
             var sw = new Stopwatch();
@@ -51,8 +51,9 @@ namespace Parallel_Options
                              (val, pls, local) => 
                              {
                                  threadsUsed.TryAdd(Thread.CurrentThread.ManagedThreadId, 0);
-                                 if (val < 5000)
+                                 if (val < (iterations / 2))
                                  {
+                                    //for (int i = 0; i < 1000000; i++) ;
                                     Thread.Sleep(1);
                                  }
                                  return local + 1;

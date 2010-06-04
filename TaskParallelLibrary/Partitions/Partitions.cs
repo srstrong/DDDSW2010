@@ -9,7 +9,7 @@ namespace Partitions
 {
     class Partitions
     {
-        private const int DataSize = 100000;
+        private const int DataSize = 10000000;
 
         static void Main()
         {
@@ -25,7 +25,7 @@ namespace Partitions
             var sw = new Stopwatch();
             sw.Start();
 
-            Parallel.ForEach(source, (val, loopState, index) =>
+            Parallel.ForEach(source , (val, loopState, index) =>
             {
                 results[index] = source[index] * Math.PI;
             });
@@ -37,10 +37,9 @@ namespace Partitions
         static void WithPartition()
         {
             var source = Enumerable.Range(0, DataSize).ToArray();
+            var results = new double[source.Length];
 
             var rangePartitioner = Partitioner.Create(0, source.Length);
-
-            var results = new double[source.Length];
 
             var sw = new Stopwatch();
             sw.Start();

@@ -13,28 +13,27 @@ namespace Cancellation
             var options = new ParallelOptions {CancellationToken = tokenSource.Token};
 
             ThreadPool.QueueUserWorkItem(obj =>
-                                             {
-                                                 try
-                                                 {
-                                                     Parallel.For(0, 1000, options, i =>
-                                                                                        {
-                                                                                            Console.WriteLine("Iteration {0}", i);
-                                                                                            Thread.Sleep(10);
-                                                                                        });
-                                                 }
-                                                 catch (OperationCanceledException)
-                                                 {
-                                                     Console.WriteLine("Loop operation was cancelled");
-                                                 }
-                                             });
+                    {
+                        try
+                        {
+                            Parallel.For(0, 1000, options, i =>
+                                                            {
+                                                                Console.WriteLine("Iteration {0}", i);
+                                                                Thread.Sleep(10);
+                                                            });
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            Console.WriteLine("Loop operation was cancelled");
+                        }
+                    });
 
             Thread.Sleep(100);
 
             Console.WriteLine("Cancelling work...");
             tokenSource.Cancel();
 
-            Console.WriteLine("Press enter key to continue");
-            Console.ReadLine();
+            Thread.Sleep(1000);
         }
     }
 }

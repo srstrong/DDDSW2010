@@ -26,7 +26,7 @@ namespace SumTransactions
             var rand = new Random();
 
             return Enumerable.Range(1, 10000000)
-                           .Select(i => new Transaction { AccountId = i, Amount = rand.Next(100) });
+                           .Select(i => new Transaction { AccountId = i, Amount = rand.Next(101) });
         }
 
         static void UpdateGrandTotal(long threadTotal)

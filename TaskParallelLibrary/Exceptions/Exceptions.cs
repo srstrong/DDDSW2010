@@ -27,11 +27,12 @@ namespace Exceptions
                                                  }
                                              }
 
-                                             if (random.Next(10) == 0)
+                                             if (random.Next(50) == 0)
                                              {
                                                  Console.WriteLine("Iteration {0}, thread {1} is going to spoil the party", index, Thread.CurrentThread.ManagedThreadId);
                                                  throw new Exception(string.Format("Iteration {0} threw on thread {1}", index, Thread.CurrentThread.ManagedThreadId));
                                              }
+                                             Console.WriteLine("Completing iteration {0} on thread {1}", index, Thread.CurrentThread.ManagedThreadId);
                                          }
                     );
             }
