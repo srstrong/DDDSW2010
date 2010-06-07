@@ -2,6 +2,7 @@ obj
 bin
 deploy
 deploy/*
+*.tmproj
 *.pidb
 *.trx
 *.dll

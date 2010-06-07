@@ -25,8 +25,8 @@ namespace ImageConversionWithProgressIndication
 
         public void ConvertImageToSepia()
         {
-            for (var y = 0; y < _height; y++)
-            //Parallel.For(0, _height, y =>
+            //for (var y = 0; y < _height; y++)
+            Parallel.For(0, _height, y =>
                 {
                     for (var x = 0; x < _width; x++)
                     {
@@ -40,7 +40,7 @@ namespace ImageConversionWithProgressIndication
                     RowReady(_buffer, new Int32Rect(0, y, _width, 1), _stride,
                             _buffer.GetOffset(0, y, _stride));
                 }
-            //);
+            );
         }
     }
 }

@@ -27,19 +27,19 @@ namespace ImageConversion
 
             var backBuffer = bitmap.BackBuffer;
 
-            for (var y = 0; y < height; y++)
-            //Parallel.For(0, height, y =>
-                                                    {
-                                                        for (var x = 0; x < width; x++)
-                                                        {
-                                                            var pixel = GetPixel(backBuffer, x, y, stride);
+            //for (var y = 0; y < height; y++)
+            Parallel.For(0, height, y =>
+                    {
+                        for (var x = 0; x < width; x++)
+                        {
+                            var pixel = GetPixel(backBuffer, x, y, stride);
 
-                                                            pixel = pixel.ToSepia();
+                            pixel = pixel.ToSepia();
 
-                                                            SetPixel(pixel, backBuffer, x, y, stride);
-                                                        }
-                                                    }
-            //);
+                            SetPixel(pixel, backBuffer, x, y, stride);
+                        }
+                    }
+            );
 
             bitmap.AddDirtyRect(new Int32Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
 

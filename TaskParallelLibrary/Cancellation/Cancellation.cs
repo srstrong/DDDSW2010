@@ -17,10 +17,10 @@ namespace Cancellation
                         try
                         {
                             Parallel.For(0, 1000, options, i =>
-                                                            {
-                                                                Console.WriteLine("Iteration {0}", i);
-                                                                Thread.Sleep(10);
-                                                            });
+                                        {
+                                            Console.WriteLine("Iteration {0}", i);
+                                            Thread.Sleep(10);
+                                        });
                         }
                         catch (OperationCanceledException)
                         {

@@ -14,7 +14,8 @@ namespace SumTransactions
         {
             Parallel.ForEach(GetTransactions(),                                            // Data source
                            () => 0L,                                                    // Initialisation function, called once per thread
-                           (trx, pls, currentThreadState) => currentThreadState + trx.Amount, // Called for each data item
+                           (trx, pls, currentThreadState) => 
+                               currentThreadState + trx.Amount, // Called for each data item
                            total => UpdateGrandTotal(total)                                // Finalisation function, called once per thread
                 );
 

@@ -40,25 +40,24 @@ namespace DuplicateFileFinder
             var files = Directory.GetFiles(path);
 
             Parallel.ForEach(files, fileName =>
-                                        {
-                                            byte[] data;
-                                            try
-                                            {
-                                                //Console.WriteLine("Reading file {0} on thread {1}", fileName, Thread.CurrentThread.ManagedThreadId);
-                                                data = File.ReadAllBytes(fileName);
-                                            }
-                                            catch (IOException)
-                                            {
-                                                return;
-                                            }
+            {
+                byte[] data = null;
+                try
+                {
+                    Console.WriteLine("Reading file {0} on thread {1}", fileName, Thread.CurrentThread.ManagedThreadId);
+                    data = File.ReadAllBytes(fileName);
+                    var checksum = ComputeChecksum(data);
 
-                                            var checksum = ComputeChecksum(data);
+                    if (!Dictionary.TryAdd(checksum, fileName))
+                    {
+                        Console.WriteLine("\nDuplicate!\n{0}\nis a duplicate of\n{1}", fileName, Dictionary[checksum]);
+                    }
+                }
+                catch (Exception)
+                {
+                }
 
-                                            if (!Dictionary.TryAdd(checksum, fileName))
-                                            {
-                                                Console.WriteLine("\nDuplicate!\n{0}\nis a duplicate of\n{1}", fileName, Dictionary[checksum]);
-                                            }
-                                        });
+            });
         }
 
         private static string ComputeChecksum(byte[] data)
